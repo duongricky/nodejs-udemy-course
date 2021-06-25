@@ -1,4 +1,12 @@
-const fs = require('fs')
+// const name = require('./utils')
+const sum = require('./utils')
+const getNotes = require('./note')
+const validator = require('validator')
+const chalk = require('chalk')
 
-fs.writeFileSync('notes.txt', 'This file was created by DR (edited)')
-fs.appendFileSync('notes.txt', 'This is a appended message')
+console.log('This is app.js')
+console.log(sum(3, 5))
+console.log(getNotes())
+
+console.log(validator.isEmail('foo@bar.com'))
+console.log(validator.isEmail('foo@sss.com'))
