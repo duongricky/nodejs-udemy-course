@@ -13,5 +13,3 @@ const tasks = {
         return this.tasks.filter((task) => !task.completed)
     }
 }
-
-console.log(tasks.getTasksToDo())
