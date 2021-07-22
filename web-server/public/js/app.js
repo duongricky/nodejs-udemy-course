@@ -26,7 +26,7 @@ weatherForm.addEventListener('submit', (e) => {
     const message1 = document.querySelector('#message-1')
     const message2 = document.querySelector('#message-2')
     const location = document.querySelector('input').value
-    const url = 'http://localhost:3000/weather?address=' + encodeURIComponent(location);
+    const url = '/weather?address=' + encodeURIComponent(location);
     console.log(url)
 
     fetch(url).then((response) => {
