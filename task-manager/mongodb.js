@@ -16,18 +16,18 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     const db = client.db(dbName)
 
     // insert One
-    // db.collection('users').insertOne({
-    //     _id: id,
-    //     name: 'Dil222',
-    //     age: 25
-    // }, (error, result) => {
-    //     if (error) {
-    //         return console.log('Unable to insert user')
-    //     }
+    db.collection('users').insertOne({
+        _id: id,
+        name: 'Dil222',
+        age: 25
+    }, (error, result) => {
+        if (error) {
+            return console.log('Unable to insert user')
+        }
 
-    //     console.log('Insert user successfully')
-    //     console.log(result.ops)
-    // })
+        console.log('Insert user successfully')
+        console.log(result.ops)
+    })
 
     // db.collection('users').findOne({ _id: new ObjectID("60fa885f1a96e13ba3763b17") }, (error, user) => {
     //     if (error) {
