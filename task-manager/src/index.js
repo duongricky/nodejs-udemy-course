@@ -1,46 +1,28 @@
 const express = require('express')
 require('./db/mongoose')
-const User = require('./models/user')
-const Task = require('./models/task')
-const userRouters = require('./routers/user');
+const userRouters = require('./routers/user')
+const taskRouters = require('./routers/task')
 const app = express()
 const port = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(userRouters)
-
-//Create task
-app.post('/tasks', (req, res) => {
-    const task = new Task(req.body);
-
-    task.save().then((result) => {
-        res.send(task)
-    }).catch((error) => {
-        res.send(error)
-    })
-})
-
-//Get list tasks
-app.get('/tasks', (req, res) => {
-    Task.find({}).then((tasks) => {
-        console.log(tasks)
-        res.send(tasks)
-    }).catch((error) => {
-        res.send(error)
-    })
-})
-
-//Get detail user
-app.get('/tasks/:id', (req, res) => {
-    const _id = req.params.id
-
-    Task.findById(_id).then((task) => {
-        res.send(task)
-    }).catch((error) => {
-        res.send(error)
-    })
-})
+app.use(taskRouters)
 
 app.listen(port, () => {
     console.log("Server is up on port " + port)
 })
+const Task = require('./models/task')
+const User = require('./models/user')
+
+const main = async () => {
+    // const task = await Task.findById('6121c58c24b9bc18cdc444c3')
+    // await task.populate('owner').execPopulate()
+    // console.log(task.owner)
+
+    // const user = await User.findById('6121c58424b9bc18cdc444c0')
+    // await user.populate('tasks').execPopulate()
+    // console.log(user.tasks)
+}
+
+main()
