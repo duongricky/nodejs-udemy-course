@@ -6,6 +6,7 @@ const Task = require('../models/task')
 const router = new express.Router()
 const auth = require('../middleware/auth')
 
+//Create a task
 router.post('/tasks', auth, async (req, res) => {
     const task = new Task({
         ...req.body,
@@ -20,9 +21,33 @@ router.post('/tasks', auth, async (req, res) => {
 })
 
 //Get list tasks
+//Example for pagination url: /tasks?limit=5skip0 => page 1
+//Example for sorting url: /tasks?sortBy=field&orderBy=asc|desc (asc is default)
 router.get('/tasks', auth, async (req, res) => {
+    const match = {}
+    const sort = {}
+    if (req.query.completed) {
+        match.completed = req.query.completed === 'true'
+    }
+
+    const sortBy = req.query.sortBy
+    let orderBy = req.query.orderBy
+
+    if (sortBy) {
+        orderBy = (orderBy === 'desc') ? -1 : 1;
+        sort[sortBy] = orderBy
+    }
+
     try {
-        await req.user.populate('tasks').execPopulate()
+        await req.user.populate({
+            path: 'tasks',
+            match,
+            options: {
+                limit: parseInt(req.query.limit),
+                skip: parseInt(req.query.skip),
+                sort
+            }
+        }).execPopulate()
         res.send(req.user.tasks)
     } catch (e) {
         res.status(500).send()
